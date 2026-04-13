@@ -7,11 +7,8 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+  @apply bg-black;
+  color-scheme: dark;
 }
 
 .no-callout {

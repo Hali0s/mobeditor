@@ -5,7 +5,7 @@ import { editorActions } from '../../../shared/store';
 
 export const AddTrackAction: React.FC = () => {
   return (
-    <ActionButton onClick={() => editorActions.addTrack({ name: 'Новая дорожка' })}>
+    <ActionButton onClick={() => editorActions.addTrack()}>
       <Layers size={18} />
       <span className="text-[10px] opacity-80">Дорожка</span>
     </ActionButton>

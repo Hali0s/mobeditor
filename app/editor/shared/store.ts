@@ -156,6 +156,20 @@ export const editorActions = {
   addAssetAsClip: (assetId: string) => {
     const asset = editorStore.assets[assetId];
     if (!asset || asset.loadState !== 'loaded') return;
+
+    // Auto-set composition aspect ratio from the first video/image added (if no clips yet)
+    const hasExistingClips = editorStore.tracks.some(t => t.clips.length > 0);
+    if (!hasExistingClips && (asset.type === 'video' || asset.type === 'image')) {
+      const w = (asset as any).width;
+      const h = (asset as any).height;
+      if (w && h) {
+        const gcd = (a: number, b: number): number => (b === 0 ? Math.abs(a) : gcd(b, a % b));
+        const g = gcd(w, h) || 1;
+        editorStore.composition.aspectW = Math.floor(w / g);
+        editorStore.composition.aspectH = Math.floor(h / g);
+      }
+    }
+
     const trackId = editorActions.getPreferredTrackId();
     const track = editorStore.tracks.find(t => t.id === trackId);
     if (!track) return;

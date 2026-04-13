@@ -32,9 +32,17 @@ export const ClipActions: React.FC<{ clipId: string }> = ({ clipId }) => {
         <DuplicateClipAction clipId={clip.id} />
         <SplitClipAction clipId={clip.id} />
         <RemoveClipAction clipId={clip.id} />
-        <ClipOpacityAction clipId={clip.id} opacity={clip.opacity} />
         <ToggleClipVisibilityAction clipId={clip.id} visible={clip.visible} />
         <ToggleClipMuteAction clipId={clip.id} muted={clip.muted} />
+
+        {asset?.type === 'video' && (
+          <>
+            <DetachAudioAction clipId={clip.id} />
+            <AVSpeedAction clipId={clip.id} />
+          </>
+        )}
+
+        <ClipOpacityAction clipId={clip.id} opacity={clip.opacity} />
 
         {asset?.type === 'image' && (
           <>
@@ -56,13 +64,6 @@ export const ClipActions: React.FC<{ clipId: string }> = ({ clipId }) => {
             <AudioFadeInAction clipId={clip.id} />
             <AudioFadeOutAction clipId={clip.id} />
             <AudioSpeedAction clipId={clip.id} />
-          </>
-        )}
-
-        {asset?.type === 'video' && (
-          <>
-            <AVSpeedAction clipId={clip.id} />
-            <DetachAudioAction clipId={clip.id} />
           </>
         )}
       </ActionsRow>
