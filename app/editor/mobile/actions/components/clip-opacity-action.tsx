@@ -11,7 +11,7 @@ export const ClipOpacityAction: React.FC<{ clipId: string; opacity: number }> = 
     <>
       <ActionButton onClick={() => setOpen(true)}>
         <SlidersHorizontal size={18} />
-        <span className="text-[10px] opacity-80">Opacity</span>
+        <span className="text-[10px] opacity-80">Прозрачность</span>
       </ActionButton>
       <Drawer.Root open={open} onOpenChange={setOpen}>
         <Drawer.Portal>
@@ -19,7 +19,7 @@ export const ClipOpacityAction: React.FC<{ clipId: string; opacity: number }> = 
           <Drawer.Content className="fixed bottom-0 left-0 right-0 rounded-t-2xl bg-neutral-900 text-white p-4">
             <div className="mx-auto max-w-md">
               <div className="h-1 w-12 rounded-full bg-white/20 mx-auto mb-3" />
-              <div className="text-sm font-medium mb-4">Clip opacity</div>
+              <div className="text-sm font-medium mb-4">Прозрачность клипа</div>
               <input
                 type="range"
                 min={0}

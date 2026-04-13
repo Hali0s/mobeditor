@@ -37,15 +37,15 @@ export const ExportToast: React.FC = () => {
         {isDone ? (
           <div className="flex items-center gap-2">
             <Check size={14} />
-            <span>Export finished</span>
+            <span>Экспорт завершён</span>
           </div>
         ) : isError ? (
           <div className="flex items-center gap-2">
-            <span>Export failed</span>
+            <span>Ошибка экспорта</span>
           </div>
         ) : (
           <div className="flex items-center gap-3">
-            <div className="flex-1">Exporting…</div>
+            <div className="flex-1">Экспорт…</div>
             <div className="w-20 h-1.5 bg-white/10 rounded-full overflow-hidden">
               <div className="h-full bg-white/70" style={{ width: `${Math.round((snap.progress || 0) * 100)}%` }} />
             </div>

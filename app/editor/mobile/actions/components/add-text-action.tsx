@@ -12,7 +12,7 @@ export const AddTextAction: React.FC = () => {
   return (
     <ActionButton onClick={handleClick}>
       <TypeIcon size={18} />
-      <span className="text-[10px] opacity-80">Add text</span>
+      <span className="text-[10px] opacity-80">Текст</span>
     </ActionButton>
   );
 };

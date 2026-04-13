@@ -21,7 +21,7 @@ export const AudioSpeedAction: React.FC<{ clipId: string }> = ({ clipId }) => {
     <>
       <ActionButton onClick={() => setOpen(true)}>
         <Gauge size={18} />
-        <span className="text-[10px] opacity-80">Speed</span>
+        <span className="text-[10px] opacity-80">Скорость</span>
       </ActionButton>
       <Drawer.Root open={open} onOpenChange={setOpen}>
         <Drawer.Portal>
@@ -30,13 +30,13 @@ export const AudioSpeedAction: React.FC<{ clipId: string }> = ({ clipId }) => {
             <div className="mx-auto max-w-md">
               <div className="h-1 w-12 rounded-full bg-white/20 mx-auto mb-3" />
               <div className="flex items-center gap-2 mb-4">
-                <div className="text-sm font-medium">Playback speed</div>
+                <div className="text-sm font-medium">Скорость воспроизведения</div>
                 {Math.abs((effects.speed || 1) - 1) > 0.001 && (
-                  <button onClick={reset} className="ml-auto text-white/60 hover:text-white/90 text-[11px]">Reset</button>
+                  <button onClick={reset} className="ml-auto text-white/60 hover:text-white/90 text-[11px]">Сброс</button>
                 )}
               </div>
               <div className="grid grid-cols-[80px_1fr_48px] items-center gap-2">
-                <label className="text-[11px] text-white/60">Rate</label>
+                <label className="text-[11px] text-white/60">Коэф.</label>
                 <input
                   type="range"
                   min={0.25}
@@ -48,7 +48,7 @@ export const AudioSpeedAction: React.FC<{ clipId: string }> = ({ clipId }) => {
                 />
                 <div className="text-[10px] text-white/60 tabular-nums text-right">{effects.speed.toFixed(2)}×</div>
               </div>
-              <div className="mt-2 text-[11px] text-white/50">Applied to this clip only. Combines with global playback speed.</div>
+              <div className="mt-2 text-[11px] text-white/50">Применяется только к этому клипу. Сочетается с глобальной скоростью.</div>
             </div>
           </Drawer.Content>
         </Drawer.Portal>

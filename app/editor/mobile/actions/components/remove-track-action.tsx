@@ -7,7 +7,7 @@ export const RemoveTrackAction: React.FC<{ trackId: string }> = ({ trackId }) =>
   return (
     <ActionButton onClick={() => editorActions.removeTrack(trackId)} className="bg-red-500/20 text-red-300 active:bg-red-500/30">
       <Trash2 size={18} />
-      <span className="text-[10px] opacity-80">Remove</span>
+      <span className="text-[10px] opacity-80">Удалить</span>
     </ActionButton>
   );
 };

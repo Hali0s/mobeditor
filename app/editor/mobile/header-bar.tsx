@@ -20,15 +20,15 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({ onHome, onExport }) => {
           <Film size={18} />
         </button>
       </CompositionSettingsDrawer>
-      <div className="text-sm font-medium opacity-80">VibeCut</div>
+      <div className="text-sm font-medium opacity-80">FZ-Editor</div>
       <div className="relative">
         <ExportSettingsDrawer>
           <button
-            aria-label="Export"
+            aria-label="Экспорт"
             className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 active:bg-white/20 text-sm font-medium"
             onClick={onExport}
           >
-            Export
+            Экспорт
           </button>
         </ExportSettingsDrawer>
         <ExportToast />

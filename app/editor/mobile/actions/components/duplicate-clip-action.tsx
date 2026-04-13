@@ -17,7 +17,7 @@ export const DuplicateClipAction: React.FC<{ clipId: string }> = ({ clipId }) =>
   return (
     <ActionButton onClick={handleDuplicate}>
       <Copy size={18} />
-      <span className="text-[10px] opacity-80">Duplicate</span>
+      <span className="text-[10px] opacity-80">Дублировать</span>
     </ActionButton>
   );
 };

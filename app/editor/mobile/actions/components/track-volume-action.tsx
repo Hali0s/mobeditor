@@ -11,7 +11,7 @@ export const TrackVolumeAction: React.FC<{ trackId: string; volume: number }> = 
     <>
       <ActionButton onClick={() => setOpen(true)}>
         <SlidersHorizontal size={18} />
-        <span className="text-[10px] opacity-80">Volume</span>
+        <span className="text-[10px] opacity-80">Громкость</span>
       </ActionButton>
       <Drawer.Root open={open} onOpenChange={setOpen}>
         <Drawer.Portal>
@@ -19,7 +19,7 @@ export const TrackVolumeAction: React.FC<{ trackId: string; volume: number }> = 
           <Drawer.Content className="fixed bottom-0 left-0 right-0 rounded-t-2xl bg-neutral-900 text-white p-4">
             <div className="mx-auto max-w-md">
               <div className="h-1 w-12 rounded-full bg-white/20 mx-auto mb-3" />
-              <div className="text-sm font-medium mb-4">Track volume</div>
+              <div className="text-sm font-medium mb-4">Громкость дорожки</div>
               <input
                 type="range"
                 min={0}

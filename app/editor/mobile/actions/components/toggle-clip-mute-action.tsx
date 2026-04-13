@@ -7,7 +7,7 @@ export const ToggleClipMuteAction: React.FC<{ clipId: string; muted: boolean }> 
   return (
     <ActionButton onClick={() => editorActions.updateClip(clipId, { muted: !muted })}>
       {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-      <span className="text-[10px] opacity-80">{muted ? 'Unmute' : 'Mute'}</span>
+      <span className="text-[10px] opacity-80">{muted ? 'Включить' : 'Выкл. звук'}</span>
     </ActionButton>
   );
 };

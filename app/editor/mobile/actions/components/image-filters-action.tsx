@@ -6,16 +6,16 @@ import { useSnapshot } from 'valtio';
 import editorStore, { editorActions } from '../../../shared/store';
 
 const PRESETS: { id: any; name: string }[] = [
-  { id: 'none', name: 'None' },
-  { id: 'mono', name: 'Mono' },
-  { id: 'sepia', name: 'Sepia' },
-  { id: 'film', name: 'Film' },
-  { id: 'vintage', name: 'Vintage' },
-  { id: 'cool', name: 'Cool' },
-  { id: 'warm', name: 'Warm' },
-  { id: 'pop', name: 'Pop' },
-  { id: 'fade', name: 'Fade' },
-  { id: 'dramatic', name: 'Dramatic' },
+  { id: 'none', name: 'Без фильтра' },
+  { id: 'mono', name: 'Моно' },
+  { id: 'sepia', name: 'Сепия' },
+  { id: 'film', name: 'Плёнка' },
+  { id: 'vintage', name: 'Винтаж' },
+  { id: 'cool', name: 'Холодный' },
+  { id: 'warm', name: 'Тёплый' },
+  { id: 'pop', name: 'Поп' },
+  { id: 'fade', name: 'Выцветший' },
+  { id: 'dramatic', name: 'Драма' },
 ];
 
 export const ImageFiltersAction: React.FC<{ clipId: string }> = ({ clipId }) => {
@@ -31,7 +31,7 @@ export const ImageFiltersAction: React.FC<{ clipId: string }> = ({ clipId }) => 
     <>
       <ActionButton onClick={() => setOpen(true)}>
         <Wand2 size={18} />
-        <span className="text-[10px] opacity-80">Filters</span>
+        <span className="text-[10px] opacity-80">Фильтры</span>
       </ActionButton>
       <Drawer.Root open={open} onOpenChange={setOpen}>
         <Drawer.Portal>
@@ -40,12 +40,12 @@ export const ImageFiltersAction: React.FC<{ clipId: string }> = ({ clipId }) => 
             <div className="mx-auto max-w-md">
               <div className="h-1 w-12 rounded-full bg-white/20 mx-auto mb-3" />
               <div className="flex items-center gap-2 mb-4">
-                <div className="text-sm font-medium">Image filters</div>
+                <div className="text-sm font-medium">Фильтры изображения</div>
                 {current !== 'none' && (
                   <button
                     onClick={() => editorActions.setImageFilterPreset(clipId, 'none')}
                     className="ml-auto text-white/60 hover:text-white/90 text-[11px]"
-                  >Clear</button>
+                  >Сброс</button>
                 )}
               </div>
               <div className="grid grid-cols-3 gap-2">

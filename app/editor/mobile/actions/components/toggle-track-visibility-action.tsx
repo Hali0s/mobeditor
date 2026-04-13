@@ -7,7 +7,7 @@ export const ToggleTrackVisibilityAction: React.FC<{ trackId: string; visible: b
   return (
     <ActionButton onClick={() => editorActions.updateTrack(trackId, { visible: !visible })}>
       {visible ? <Eye size={18} /> : <EyeOff size={18} />}
-      <span className="text-[10px] opacity-80">{visible ? 'Hide' : 'Show'}</span>
+      <span className="text-[10px] opacity-80">{visible ? 'Скрыть' : 'Показать'}</span>
     </ActionButton>
   );
 };

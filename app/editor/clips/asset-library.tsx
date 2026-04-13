@@ -17,7 +17,7 @@ export const AssetLibrary: React.FC = () => {
   } = useFileUpload();
 
   const handleDeleteAsset = useCallback((assetId: string) => {
-    if (confirm('Are you sure you want to delete this asset? All clips using it will be removed.')) {
+    if (confirm('Удалить этот файл? Все клипы, использующие его, будут удалены.')) {
       editorActions.removeAsset(assetId);
     }
   }, []);
@@ -33,14 +33,14 @@ export const AssetLibrary: React.FC = () => {
   return (
     <div className="bg-gray-800 border-r border-gray-600 w-64 h-full overflow-y-auto">
       <div className="p-4">
-        <h3 className="text-white font-semibold mb-4">Assets</h3>
+        <h3 className="text-white font-semibold mb-4">Медиафайлы</h3>
         
         {/* Add Asset Button */}
         <button
           onClick={handleAddAsset}
           className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded mb-4 transition-colors"
         >
-          Add Media Files
+          Добавить медиафайлы
         </button>
         
         {/* File Input */}
@@ -59,7 +59,7 @@ export const AssetLibrary: React.FC = () => {
           onDrop={handleDrop}
           className="border-2 border-dashed border-gray-600 rounded p-4 mb-4 text-center text-gray-400 hover:border-gray-500 transition-colors"
         >
-          Drop media files here
+          Перетащите медиафайлы сюда
         </div>
         
         {/* Asset List (media only) */}
@@ -89,7 +89,7 @@ export const AssetLibrary: React.FC = () => {
               <div className="text-xs text-gray-400 space-y-1">
                 {asset.type === 'video' && (
                   <>
-                    <div>Duration: {asset.duration.toFixed(2)}s</div>
+                    <div>Длительность: {asset.duration.toFixed(2)}с</div>
                     <div>FPS: {asset.fps}</div>
                   </>
                 )}
@@ -106,8 +106,8 @@ export const AssetLibrary: React.FC = () => {
           
           {Object.values(snapshot.assets as Record<string, any>).filter((a: any) => a.type !== 'text').length === 0 && (
             <div className="text-gray-400 text-sm text-center py-8">
-              No assets loaded.<br />
-              Add media files to get started.
+              Нет медиафайлов.<br />
+              Добавьте файлы для начала работы.
             </div>
           )}
         </div>

@@ -9,7 +9,7 @@ export const SplitClipAction: React.FC<{ clipId: string }> = ({ clipId }) => {
   return (
     <ActionButton onClick={() => split(clipId)} aria-label="Split clip">
       <Scissors size={18} />
-      <span className="text-[10px] opacity-80">Split</span>
+      <span className="text-[10px] opacity-80">Разрезать</span>
     </ActionButton>
   );
 };

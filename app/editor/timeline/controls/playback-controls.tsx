@@ -46,7 +46,7 @@ export const PlaybackControls: React.FC = () => {
 
       {/* Playback Speed */}
       <div className="flex items-center gap-2">
-        <label htmlFor="playback-speed" className="text-sm">Speed:</label>
+        <label htmlFor="playback-speed" className="text-sm">Скорость:</label>
         <select
           id="playback-speed"
           value={snapshot.playback.playbackRate}
@@ -72,7 +72,7 @@ export const PlaybackControls: React.FC = () => {
             : 'bg-gray-600 hover:bg-gray-700'
         }`}
       >
-        Loop
+        Цикл
       </button>
     </div>
   );

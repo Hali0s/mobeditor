@@ -7,19 +7,19 @@ import { useSnapshot } from 'valtio';
 
 // Arbitrary categories and items; keys are not hardcoded in types.
 const CATEGORIES: { name: string; items: { key: string; label: string }[] }[] = [
-  { name: 'Basic', items: [
-    { key: 'fade-in', label: 'Fade In' },
-    { key: 'fade-out', label: 'Fade Out' },
+  { name: 'Базовые', items: [
+    { key: 'fade-in', label: 'Нарастание' },
+    { key: 'fade-out', label: 'Затухание' },
   ]},
-  { name: 'Title', items: [
-    { key: 'slide-up', label: 'Slide Up' },
-    { key: 'pop-bounce', label: 'Pop Bounce' },
+  { name: 'Заголовок', items: [
+    { key: 'slide-up', label: 'Подъём' },
+    { key: 'pop-bounce', label: 'Прыжок' },
   ]},
-  { name: 'Vlog', items: [
-    { key: 'pop-bounce', label: 'Pop Bounce' },
+  { name: 'Влог', items: [
+    { key: 'pop-bounce', label: 'Прыжок' },
   ]},
-  { name: 'Retro', items: [
-    { key: 'glitch', label: 'Glitch' },
+  { name: 'Ретро', items: [
+    { key: 'glitch', label: 'Глитч' },
   ]},
 ];
 
@@ -53,7 +53,7 @@ export const TextAnimationsAction: React.FC<{ clipId: string }> = ({ clipId }) =
     <>
       <ActionButton onClick={() => setOpen(true)}>
         <Sparkles size={18} />
-        <span className="text-[10px] opacity-80">Animate</span>
+        <span className="text-[10px] opacity-80">Анимация</span>
       </ActionButton>
       <Drawer.Root open={open} onOpenChange={setOpen}>
         <Drawer.Portal>
@@ -62,7 +62,7 @@ export const TextAnimationsAction: React.FC<{ clipId: string }> = ({ clipId }) =
             <div className="mx-auto max-w-md">
               <div className="h-1 w-12 rounded-full bg-white/20 mx-auto mb-3" />
               <div className="flex items-center gap-2 mb-3">
-                <div className="text-sm font-medium">Text animations</div>
+                <div className="text-sm font-medium">Анимации текста</div>
               </div>
 
               <div className="space-y-5 max-h-[50vh] overflow-y-auto pr-1">
@@ -90,18 +90,18 @@ export const TextAnimationsAction: React.FC<{ clipId: string }> = ({ clipId }) =
 
               {active.length > 0 && (
                 <div className="mt-4 border-t border-white/10 pt-3">
-                  <div className="text-xs text-white/60 mb-2">Settings</div>
+                  <div className="text-xs text-white/60 mb-2">Настройки</div>
                   <div className="space-y-3">
                     {active.map((a) => (
                       <div key={a.key} className="rounded-xl bg-white/5 p-3">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="text-sm font-medium">{a.key}</div>
-                          <div className="ml-auto text-[11px] text-white/60">Enabled</div>
+                          <div className="ml-auto text-[11px] text-white/60">Включено</div>
                           <input type="checkbox" checked={a.enabled} onChange={(e) => setEnabled(a.key, e.target.checked)} />
                         </div>
                         {a.key === 'fade-in' && (
                           <div className="grid grid-cols-[80px_1fr_48px] items-center gap-2">
-                            <label className="text-[11px] text-white/60">Portion</label>
+                            <label className="text-[11px] text-white/60">Доля</label>
                             <input
                               type="range"
                               min={0.05}
@@ -116,7 +116,7 @@ export const TextAnimationsAction: React.FC<{ clipId: string }> = ({ clipId }) =
                         )}
                         {a.key === 'fade-out' && (
                           <div className="grid grid-cols-[80px_1fr_48px] items-center gap-2">
-                            <label className="text-[11px] text-white/60">Portion</label>
+                            <label className="text-[11px] text-white/60">Доля</label>
                             <input
                               type="range"
                               min={0.05}
@@ -132,7 +132,7 @@ export const TextAnimationsAction: React.FC<{ clipId: string }> = ({ clipId }) =
                         {a.key === 'slide-up' && (
                           <>
                             <div className="grid grid-cols-[80px_1fr_48px] items-center gap-2">
-                              <label className="text-[11px] text-white/60">Portion</label>
+                              <label className="text-[11px] text-white/60">Доля</label>
                               <input
                                 type="range"
                                 min={0.1}
@@ -145,7 +145,7 @@ export const TextAnimationsAction: React.FC<{ clipId: string }> = ({ clipId }) =
                               <div className="text-[10px] text-white/60 tabular-nums text-right">{(a.settings?.portion ?? 0.3).toFixed(2)}</div>
                             </div>
                             <div className="grid grid-cols-[80px_1fr_48px] items-center gap-2">
-                              <label className="text-[11px] text-white/60">Distance</label>
+                              <label className="text-[11px] text-white/60">Расстояние</label>
                               <input
                                 type="range"
                                 min={0.1}
@@ -161,7 +161,7 @@ export const TextAnimationsAction: React.FC<{ clipId: string }> = ({ clipId }) =
                         )}
                         {a.key === 'pop-bounce' && (
                           <div className="grid grid-cols-[80px_1fr_48px] items-center gap-2">
-                            <label className="text-[11px] text-white/60">Portion</label>
+                            <label className="text-[11px] text-white/60">Доля</label>
                             <input
                               type="range"
                               min={0.1}
@@ -176,7 +176,7 @@ export const TextAnimationsAction: React.FC<{ clipId: string }> = ({ clipId }) =
                         )}
                         {a.key === 'glitch' && (
                           <div className="grid grid-cols-[80px_1fr_48px] items-center gap-2">
-                            <label className="text-[11px] text-white/60">Strength</label>
+                            <label className="text-[11px] text-white/60">Сила</label>
                             <input
                               type="range"
                               min={0}
@@ -197,7 +197,7 @@ export const TextAnimationsAction: React.FC<{ clipId: string }> = ({ clipId }) =
               )}
 
               <div className="flex justify-end gap-2 mt-4">
-                <button onClick={() => setOpen(false)} className="px-3 py-1.5 text-sm rounded-xl bg-white/10">Close</button>
+                <button onClick={() => setOpen(false)} className="px-3 py-1.5 text-sm rounded-xl bg-white/10">Закрыть</button>
               </div>
             </div>
           </Drawer.Content>

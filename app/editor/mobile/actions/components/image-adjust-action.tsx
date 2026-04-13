@@ -27,7 +27,7 @@ export const ImageAdjustAction: React.FC<{ clipId: string }> = ({ clipId }) => {
     <>
       <ActionButton onClick={() => setOpen(true)}>
         <SlidersHorizontal size={18} />
-        <span className="text-[10px] opacity-80">Adjust</span>
+        <span className="text-[10px] opacity-80">Настройка</span>
       </ActionButton>
       <Drawer.Root open={open} onOpenChange={setOpen}>
         <Drawer.Portal>
@@ -36,20 +36,20 @@ export const ImageAdjustAction: React.FC<{ clipId: string }> = ({ clipId }) => {
             <div className="mx-auto max-w-md">
               <div className="h-1 w-12 rounded-full bg-white/20 mx-auto mb-3" />
               <div className="flex items-center gap-2 mb-4">
-                <div className="text-sm font-medium">Image adjustments</div>
-                <button onClick={reset} className="ml-auto text-white/60 hover:text-white/90 text-[11px]">Reset</button>
+                <div className="text-sm font-medium">Коррекция изображения</div>
+                <button onClick={reset} className="ml-auto text-white/60 hover:text-white/90 text-[11px]">Сброс</button>
               </div>
               <div className="space-y-2">
                 {([
-                  ['Brightness','brightness',-1,1,0.01],
-                  ['Contrast','contrast',-1,1,0.01],
-                  ['Saturation','saturation',-1,1,0.01],
-                  ['Sharpen','sharpen',0,1,0.01],
-                  ['Highlights','highlights',-1,1,0.01],
-                  ['Shadows','shadows',-1,1,0.01],
-                  ['Temperature','temperature',-1,1,0.01],
-                  ['Hue','hue',-1,1,0.01],
-                  ['Vignette','vignette',0,1,0.01],
+                  ['Яркость','brightness',-1,1,0.01],
+                  ['Контраст','contrast',-1,1,0.01],
+                  ['Насыщенность','saturation',-1,1,0.01],
+                  ['Резкость','sharpen',0,1,0.01],
+                  ['Света','highlights',-1,1,0.01],
+                  ['Тени','shadows',-1,1,0.01],
+                  ['Температура','temperature',-1,1,0.01],
+                  ['Оттенок','hue',-1,1,0.01],
+                  ['Виньетка','vignette',0,1,0.01],
                 ] as const).map(([label, key, min, max, step]) => (
                   <div key={key} className="grid grid-cols-[80px_1fr_48px] items-center gap-2">
                     <label className="text-[11px] text-white/60">{label}</label>

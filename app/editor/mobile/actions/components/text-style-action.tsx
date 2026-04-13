@@ -31,7 +31,7 @@ export const TextStyleAction: React.FC<{ clipId: string }> = ({ clipId }) => {
     <>
       <ActionButton onClick={() => setOpen(true)}>
         <SlidersHorizontal size={18} />
-        <span className="text-[10px] opacity-80">Adjust</span>
+        <span className="text-[10px] opacity-80">Стиль</span>
       </ActionButton>
       <Drawer.Root open={open} onOpenChange={setOpen}>
         <Drawer.Portal>
@@ -40,12 +40,12 @@ export const TextStyleAction: React.FC<{ clipId: string }> = ({ clipId }) => {
             <div className="mx-auto max-w-md">
               <div className="h-1 w-12 rounded-full bg-white/20 mx-auto mb-3" />
               <div className="flex items-center gap-2 mb-4">
-                <div className="text-sm font-medium">Text style</div>
-                <button onClick={reset} className="ml-auto text-white/60 hover:text-white/90 text-[11px]">Reset</button>
+                <div className="text-sm font-medium">Стиль текста</div>
+                <button onClick={reset} className="ml-auto text-white/60 hover:text-white/90 text-[11px]">Сброс</button>
               </div>
               <div className="space-y-3">
                 <div className="grid grid-cols-[80px_1fr] items-center gap-2">
-                  <label className="text-[11px] text-white/60">Font</label>
+                  <label className="text-[11px] text-white/60">Шрифт</label>
                   <select
                     className="bg-neutral-800 text-white rounded-xl px-2 py-1 text-sm border border-white/10"
                     value={local.fontFamily}
@@ -55,7 +55,7 @@ export const TextStyleAction: React.FC<{ clipId: string }> = ({ clipId }) => {
                   </select>
                 </div>
                 <div className="grid grid-cols-[80px_1fr_48px] items-center gap-2">
-                  <label className="text-[11px] text-white/60">Size</label>
+                  <label className="text-[11px] text-white/60">Размер</label>
                   <input
                     type="range"
                     min={0.1}
@@ -68,7 +68,7 @@ export const TextStyleAction: React.FC<{ clipId: string }> = ({ clipId }) => {
                   <div className="text-[10px] text-white/60 tabular-nums text-right">{local.fontSize.toFixed(2)}</div>
                 </div>
                 <div className="grid grid-cols-[80px_1fr] items-center gap-2">
-                  <label className="text-[11px] text-white/60">Color</label>
+                  <label className="text-[11px] text-white/60">Цвет</label>
                   <input
                     type="color"
                     value={local.color}
@@ -77,15 +77,15 @@ export const TextStyleAction: React.FC<{ clipId: string }> = ({ clipId }) => {
                   />
                 </div>
                 <div className="flex items-center gap-3">
-                  <label className="text-[11px] text-white/60">Bold</label>
+                  <label className="text-[11px] text-white/60">Жирный</label>
                   <input type="checkbox" checked={local.bold} onChange={(e) => setLocal({ ...local, bold: e.target.checked })} />
-                  <label className="text-[11px] text-white/60 ml-4">Italic</label>
+                  <label className="text-[11px] text-white/60 ml-4">Курсив</label>
                   <input type="checkbox" checked={local.italic} onChange={(e) => setLocal({ ...local, italic: e.target.checked })} />
                 </div>
               </div>
               <div className="flex justify-end gap-2 mt-3">
-                <button onClick={() => setOpen(false)} className="px-3 py-1.5 text-sm rounded-xl bg-white/10">Close</button>
-                <button onClick={apply} className="px-3 py-1.5 text-sm rounded-xl bg-white text-black">Apply</button>
+                <button onClick={() => setOpen(false)} className="px-3 py-1.5 text-sm rounded-xl bg-white/10">Закрыть</button>
+                <button onClick={apply} className="px-3 py-1.5 text-sm rounded-xl bg-white text-black">Применить</button>
               </div>
             </div>
           </Drawer.Content>

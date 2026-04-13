@@ -45,7 +45,7 @@ export const CompositionSettingsDrawer: React.FC<Props> = ({ children }) => {
             <div className="h-1.5 w-10 rounded-full bg-white/15 mx-auto mb-4" />
             <div className="space-y-5">
               <div>
-                <div className="text-sm font-medium mb-2 opacity-80">Aspect ratio</div>
+                <div className="text-sm font-medium mb-2 opacity-80">Соотношение сторон</div>
                 <div className="flex items-center gap-2">
                   <input
                     aria-label="Aspect ratio"
@@ -62,7 +62,7 @@ export const CompositionSettingsDrawer: React.FC<Props> = ({ children }) => {
                     onChange={(e) => handlePresetAspect(e.currentTarget.value)}
                     defaultValue=""
                   >
-                    <option value="" disabled>Common aspect presets</option>
+                    <option value="" disabled>Стандартные соотношения</option>
                     {COMMON_ASPECTS.map(a => (
                       <option key={a.label} value={a.value}>{a.label}</option>
                     ))}
@@ -71,7 +71,7 @@ export const CompositionSettingsDrawer: React.FC<Props> = ({ children }) => {
               </div>
 
               <div>
-                <div className="text-sm font-medium mb-2 opacity-80">Dimensions</div>
+                <div className="text-sm font-medium mb-2 opacity-80">Размеры</div>
                 <div className="flex items-center gap-2">
                   <select
                     aria-label="Dimension presets"
@@ -84,7 +84,7 @@ export const CompositionSettingsDrawer: React.FC<Props> = ({ children }) => {
                       }
                     }}
                   >
-                    <option value="" disabled>Select dimensions preset</option>
+                    <option value="" disabled>Выбрать пресет размеров</option>
                     {DIMENSION_PRESETS.map(p => (
                       <option key={p.label} value={p.label}>{p.label}</option>
                     ))}
@@ -94,7 +94,7 @@ export const CompositionSettingsDrawer: React.FC<Props> = ({ children }) => {
               </div>
 
               <div>
-                <div className="text-sm font-medium mb-2 opacity-80">Base FPS</div>
+                <div className="text-sm font-medium mb-2 opacity-80">Базовый FPS</div>
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
@@ -114,7 +114,7 @@ export const CompositionSettingsDrawer: React.FC<Props> = ({ children }) => {
                       if (!Number.isNaN(val)) editorActions.setBaseFps(val);
                     }}
                   >
-                    <option value="" disabled>Preset</option>
+                    <option value="" disabled>Пресет</option>
                     {FPS_PRESETS.map(f => (
                       <option key={f} value={String(f)}>{f}</option>
                     ))}
@@ -123,7 +123,7 @@ export const CompositionSettingsDrawer: React.FC<Props> = ({ children }) => {
               </div>
 
               <div>
-                <div className="text-sm font-medium mb-2 opacity-80">Canvas background</div>
+                <div className="text-sm font-medium mb-2 opacity-80">Фон холста</div>
                 <div className="flex items-center gap-2 flex-wrap">
                   {bgSwatches.map(s => (
                     <button
@@ -152,7 +152,7 @@ export const CompositionSettingsDrawer: React.FC<Props> = ({ children }) => {
                 className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 active:bg-white/20"
                 onClick={() => setOpen(false)}
               >
-                Done
+                Готово
               </button>
             </div>
           </div>
