@@ -7,5 +7,5 @@ export default defineConfig({
   server: {
     allowedHosts: true,
   },
-  base: process.env.NODE_ENV === 'production' ? '/vibecut/' : '/',
+  base: '/',
 });
