@@ -135,7 +135,7 @@ export const useTimelineDnd = ({
         const container = scrollContainer;
         const rect = container?.getBoundingClientRect();
         const scrollLeft = container?.scrollLeft ?? 0;
-        const headerWidth = 192; // timeline left gutter width
+        const headerWidth = 40; // timeline left gutter width
         let desiredStart = clip.start;
         if (rect) {
             const contentX = scrollLeft + (dragState.currentPosition.x - rect.left) - headerWidth - dragState.pointerOffsetX;

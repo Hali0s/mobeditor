@@ -147,7 +147,7 @@ export const editorActions = {
     // Fallback to first track
     if (editorStore.tracks.length > 0) return editorStore.tracks[0].id;
     // Ensure at least one track exists
-    return editorActions.addTrack({ name: 'Video Track 1' });
+    return editorActions.addTrack({ name: 'V1' });
   },
 
   /**
@@ -190,7 +190,7 @@ export const editorActions = {
     const id = uuidv4();
     const newTrack: Track = {
       id,
-      name: `Track ${editorStore.tracks.length + 1}`,
+      name: `V${editorStore.tracks.length + 1}`,
       clips: [],
       muted: false,
       volume: 1,

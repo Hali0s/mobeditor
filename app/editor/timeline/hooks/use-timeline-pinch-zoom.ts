@@ -44,7 +44,7 @@ export function useTimelinePinchZoom(contentEl: RefLike) {
     const scrollContainer = getScrollParent(el);
     if (!scrollContainer) return;
 
-    const TRACK_HEADER_PX = 192;
+    const TRACK_HEADER_PX = 40;
 
     const onTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 2) {

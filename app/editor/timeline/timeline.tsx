@@ -74,12 +74,12 @@ export const Timeline: React.FC<{ scrollContainer?: HTMLElement | null }> = ({ s
         <div
           ref={timelineRef}
           className="relative"
-          style={{ width: `${192 + timelineWidth}px`, height: `${timelineHeight}px` }}
+          style={{ width: `${40 + timelineWidth}px`, height: `${timelineHeight}px` }}
         >
         {/* Track header background (below ruler) */}
         <div
           className="absolute left-0"
-          style={{ top: `32px`, width: '192px', height: `${timelineHeight - 32}px`, backgroundColor: 'rgba(255,255,255,0.05)' }}
+          style={{ top: `32px`, width: '40px', height: `${timelineHeight - 32}px`, backgroundColor: 'rgba(255,255,255,0.05)' }}
         />
 
         {/* Timeline ruler */}
@@ -97,7 +97,7 @@ export const Timeline: React.FC<{ scrollContainer?: HTMLElement | null }> = ({ s
           const width = clip.duration * snapshot.timelineZoom;
           
           // Calculate left position using same logic as drop calculation for consistency
-          const headerWidth = 192;
+          const headerWidth = 40;
           const scrollLeft = timelineRef.current?.scrollLeft ?? 0;
           const containerRect = timelineRef.current?.getBoundingClientRect();
           let left = 0;

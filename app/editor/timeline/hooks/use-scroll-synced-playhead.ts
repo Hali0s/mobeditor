@@ -40,7 +40,7 @@ export function useScrollSyncedPlayhead(contentEl: RefLike) {
     const scrollContainer = getScrollParent(contentEl.current);
     if (!scrollContainer) return;
 
-    const TRACK_HEADER_PX = 192;
+    const TRACK_HEADER_PX = 40;
 
     const updateFromCenter = () => {
       if (editorStore.playback.isPlaying) return; // Ignore while playing
@@ -100,7 +100,7 @@ export function useScrollSyncedPlayhead(contentEl: RefLike) {
   if (editorStore.playback.isPlaying) return; // Only when idle
   if ((editorStore as any).isPinchZooming) return; // Don't fight pinch zoom adjustments
 
-    const TRACK_HEADER_PX = 192;
+    const TRACK_HEADER_PX = 40;
     const targetContentX = TRACK_HEADER_PX + editorStore.playback.currentTime * editorStore.timelineZoom;
   const desiredScrollLeft = targetContentX - scrollContainer.clientWidth / 2;
 

@@ -47,13 +47,13 @@ export const TimelineRuler: React.FC<TimelineRulerProps> = ({
   return (
     <div className="h-8 bg-zinc-900/90 backdrop-blur-lg sticky top-0 z-[100]">
       {/* Track header spacer */}
-      <div className="absolute left-0 top-0 w-48 h-full " />
+      <div className="absolute left-0 top-0 w-10 h-full " />
       
       {/* Ruler area */}
       <div 
         className="absolute bg-transparent"
         style={{ 
-          left: '192px',
+          left: '40px',
           top: 0,
           width: `${timelineWidth}px`,
           height: '100%'
