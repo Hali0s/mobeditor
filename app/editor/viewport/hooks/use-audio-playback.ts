@@ -24,7 +24,7 @@ export const useAudioPlayback = (clip: ActiveClip, isActive: boolean) => {
 
   // Create/attach audio element per clip instance with Web Audio API for iOS Safari compatibility
   useEffect(() => {
-    if (!asset || asset.type !== 'audio' || asset.loadState !== 'loaded') return;
+    if (!asset || (asset.type !== 'audio' && asset.type !== 'video') || asset.loadState !== 'loaded') return;
     
     const a = new Audio();
     a.crossOrigin = 'anonymous';

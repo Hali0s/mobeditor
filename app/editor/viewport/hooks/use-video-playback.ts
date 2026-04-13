@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import editorStore from '../../shared/store';
 import type { ActiveClip } from '../../shared/types';
+import { videoRegistry } from './video-registry';
 
 export const useVideoPlayback = (clip: ActiveClip, isActive: boolean) => {
   const snapshot = useSnapshot(editorStore);
@@ -23,7 +24,8 @@ export const useVideoPlayback = (clip: ActiveClip, isActive: boolean) => {
   video.crossOrigin = 'anonymous';
   video.setAttribute('crossorigin', 'anonymous');
       video.preload = 'metadata';
-  video.muted = true; // Keep muted for 3D preview
+  // Keep muted for autoplay (audio handled via AudioClipPlayback)
+  video.muted = true;
   video.setAttribute('muted', '');
       // Autoplay + playsinline are required for iOS/Safari to start rendering frames without fullscreen
   video.autoplay = true;
@@ -41,6 +43,7 @@ export const useVideoPlayback = (clip: ActiveClip, isActive: boolean) => {
         const perClipSpeed = (clip as any).speed ?? clip.audioEffects?.speed ?? 1;
         video.playbackRate = Math.max(0.1, Math.min(4, (snapshot.playback.playbackRate || 1) * perClipSpeed));
         videoRef.current = video;
+        videoRegistry.register(clip.id, video);
         // Try to grab an initial frame to populate the texture on Safari
         if (!snapshot.playback.isPlaying) {
           try {
@@ -134,6 +137,7 @@ export const useVideoPlayback = (clip: ActiveClip, isActive: boolean) => {
         }
         
         // Clean up video element
+        videoRegistry.unregister(clip.id);
         if (!video.paused) {
           video.pause();
         }

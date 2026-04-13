@@ -6,11 +6,13 @@
 */
 import { useCallback } from 'react';
 import * as THREE from 'three';
+import { snapshot as valtioSnapshot } from 'valtio';
 import { getRendererContext } from './export-context';
 import editorStore, { editorActions } from '../../shared/store';
 import { useSnapshot } from 'valtio';
 import { useFittedFrameSize, useComposition } from './use-composition';
 import { exportActions } from '../../shared/export-store';
+import { videoRegistry } from './video-registry';
 
 // ESM dynamic import for Mediabunny
 let _mbPromise: Promise<any> | null = null;
@@ -38,8 +40,29 @@ export function useExport() {
   const { aspectW, aspectH } = useComposition();
 
   const renderFrameToCanvas = async (w: number, h: number, timeSec: number): Promise<HTMLCanvasElement> => {
-    // Advance playhead to desired time for deterministic render
+    // Advance playhead to desired time
     editorActions.seekTo(timeSec);
+
+    // Directly seek all registered video elements and wait — React effects won't have run yet
+    const storeSnap = valtioSnapshot(editorStore) as typeof editorStore;
+    const seekPromises: Promise<void>[] = [];
+    for (const [clipId, video] of videoRegistry.getAll()) {
+      const clip = (storeSnap.tracks as any[]).flatMap((t: any) => t.clips).find((c: any) => c.id === clipId);
+      if (!clip) continue;
+      if (timeSec < clip.start || timeSec >= clip.end) continue;
+      const spd = Math.max(0.1, Math.min(4, (clip.speed ?? 1)));
+      const targetTime = Math.max(0, clip.trimStart + (timeSec - clip.start) * spd);
+      const assetDur = (storeSnap.assets as any)[clip.assetId]?.duration ?? Infinity;
+      const clampedTime = Math.min(targetTime, assetDur - 0.001);
+      if (Math.abs(video.currentTime - clampedTime) < 0.001) continue; // already there
+      seekPromises.push(new Promise<void>(resolve => {
+        const done = () => resolve();
+        video.addEventListener('seeked', done, { once: true });
+        setTimeout(done, 300); // fallback if seeked never fires
+      }));
+      try { video.currentTime = clampedTime; } catch {}
+    }
+    if (seekPromises.length > 0) await Promise.all(seekPromises);
 
     const ctx = getRendererContext();
     if (!ctx) {

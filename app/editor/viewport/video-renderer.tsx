@@ -52,6 +52,14 @@ export const TrackLayer: React.FC<TrackLayerProps> = ({ track, currentTime }) =>
         if (t === 'audio') {
           return <AudioClipPlayback key={clip.id} clip={activeClip} isActive={isActive} />;
         }
+        if (t === 'video') {
+          return (
+            <React.Fragment key={clip.id}>
+              <VideoClip clip={activeClip} isActive={isActive} />
+              <AudioClipPlayback clip={activeClip} isActive={isActive} />
+            </React.Fragment>
+          );
+        }
         return <VideoClip key={clip.id} clip={activeClip} isActive={isActive} />;
       })}
     </group>
