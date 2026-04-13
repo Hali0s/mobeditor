@@ -14,9 +14,18 @@ export const VideoEditor: React.FC = () => {
   // Initialize with a default track if none exist
   useEffect(() => {
     if (snapshot.tracks.length === 0) {
-      editorActions.addTrack({ name: 'Video Track 1' });
+      editorActions.addTrack({ name: 'V1' });
     }
   }, [snapshot.tracks.length]);
+
+  // Rename legacy track names (Video Track N / Track N) → VN
+  useEffect(() => {
+    editorStore.tracks.forEach((track, i) => {
+      if (/^(Video Track|Track)\s*\d+$/i.test(track.name)) {
+        track.name = `V${i + 1}`;
+      }
+    });
+  }, []);
 
   // Enable keyboard shortcuts
   useKeyboardShortcuts();

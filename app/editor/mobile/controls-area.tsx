@@ -30,7 +30,7 @@ export const ControlsArea: React.FC = () => {
         >
           <div className="flex items-center justify-center gap-2">
             {pb.playback.isPlaying ? <Pause size={18} /> : <Play size={18} />}
-            <span>{pb.playback.isPlaying ? 'Pause' : 'Play'}</span>
+            <span>{pb.playback.isPlaying ? 'Пауза' : 'Играть'}</span>
           </div>
         </button>
 
@@ -49,7 +49,7 @@ export const ControlsArea: React.FC = () => {
           {formatTime(pb.playback.currentTime)} / {formatTime(snap.totalDuration)}
         </div>
         <label className="flex items-center gap-2">
-          <span className="opacity-70">Speed</span>
+          <span className="opacity-70">Скорость</span>
           <select
             className="bg-black/60 rounded-lg px-2 py-1 outline-none"
             value={pb.playback.playbackRate}

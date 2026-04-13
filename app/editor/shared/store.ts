@@ -710,6 +710,53 @@ export const editorActions = {
     return undefined;
   },
 
+  /**
+   * Detach audio from a video clip — creates a new audio-only asset + clip on a new track.
+   * The video clip is muted; audio lives on the new track at the same timeline position.
+   */
+  detachAudio: (clipId: string): string | undefined => {
+    for (const track of editorStore.tracks) {
+      const clip = track.clips.find(c => c.id === clipId);
+      if (!clip) continue;
+      const asset = editorStore.assets[clip.assetId] as any;
+      if (!asset || asset.type !== 'video') return undefined;
+
+      // Create audio asset reusing the same src (browser decodes the audio track)
+      const audioAssetId = uuidv4();
+      editorStore.assets[audioAssetId] = {
+        id: audioAssetId,
+        type: 'audio',
+        src: asset.src,
+        loadState: 'loaded',
+        duration: asset.duration,
+        audio: null,
+      } as any;
+
+      // New track for audio
+      const audioTrackId = editorActions.addTrack({ name: `A${editorStore.tracks.length}` });
+      const audioTrack = editorStore.tracks.find(t => t.id === audioTrackId);
+      if (!audioTrack) return undefined;
+
+      // Audio clip mirrors the video clip's timeline position and trim
+      const audioClipId = uuidv4();
+      audioTrack.clips.push({
+        ...clip,
+        id: audioClipId,
+        assetId: audioAssetId,
+        visible: true,
+        muted: false,
+      } as any);
+
+      // Mute video clip (video track keeps video but no audio)
+      clip.muted = true;
+
+      editorActions.updateTotalDuration();
+      editorActions.selectClips([audioClipId]);
+      return audioClipId;
+    }
+    return undefined;
+  },
+
   // === PLAYBACK CONTROL ===
 
   /**
@@ -723,7 +770,14 @@ export const editorActions = {
    * Play/pause toggle
    */
   togglePlayback: () => {
-    editorStore.playback.isPlaying = !editorStore.playback.isPlaying;
+    const wasPlaying = editorStore.playback.isPlaying;
+    if (!wasPlaying) {
+      // If at or past the end, rewind to start before playing
+      if (editorStore.playback.currentTime >= editorStore.totalDuration - 0.05) {
+        editorStore.playback.currentTime = 0;
+      }
+    }
+    editorStore.playback.isPlaying = !wasPlaying;
   },
 
   /**

@@ -18,6 +18,7 @@ import AudioFadeOutAction from '../components/audio-fade-out-action';
 import AudioSpeedAction from '../components/audio-speed-action';
 // New AV Speed control (video & audio)
 import AVSpeedAction from '../components/av-speed-action';
+import DetachAudioAction from '../components/detach-audio-action';
 
 export const ClipActions: React.FC<{ clipId: string }> = ({ clipId }) => {
   const snap = useSnapshot(editorStore);
@@ -61,6 +62,7 @@ export const ClipActions: React.FC<{ clipId: string }> = ({ clipId }) => {
         {asset?.type === 'video' && (
           <>
             <AVSpeedAction clipId={clip.id} />
+            <DetachAudioAction clipId={clip.id} />
           </>
         )}
       </ActionsRow>
