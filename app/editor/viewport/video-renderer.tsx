@@ -3,6 +3,7 @@ import { useSnapshot } from 'valtio';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import editorStore, { editorActions } from '../shared/store';
+import { useViewportDimsAtPlane } from './hooks/use-composition';
 import type { Track, ActiveClip } from '../shared/types';
 import { VideoClip } from './video-clip';
 import { ImageClip, TextClip } from './index';
@@ -198,6 +199,23 @@ export const ClipGizmo: React.FC<ClipGizmoProps> = ({ clipId, visible = true }) 
 /**
  * Composite video renderer with all necessary components
  */
+// Invisible fullscreen backdrop — clicking deselects all clips
+const DeselectBackdrop: React.FC = () => {
+  const { vW, vH } = useViewportDimsAtPlane();
+  return (
+    <mesh
+      position={[0, 0, -0.02]}
+      onPointerDown={(e) => {
+        e.stopPropagation();
+        editorActions.selectClips([]);
+      }}
+    >
+      <planeGeometry args={[vW, vH]} />
+      <meshBasicMaterial transparent opacity={0} />
+    </mesh>
+  );
+};
+
 export const VideoEditorRenderer: React.FC = () => {
   const snapshot = useSnapshot(editorStore);
   const { background } = useComposition();
@@ -205,9 +223,10 @@ export const VideoEditorRenderer: React.FC = () => {
 
   return (
     <>
-      {/* Black matte filling the viewport (outside the composition cutout) is implied by Canvas parent background. */}
+      {/* Fullscreen invisible backdrop — click to deselect clips */}
+      <DeselectBackdrop />
       {/* Composition background plane (fits entirely and centered) */}
-  <mesh position={[0, 0, -0.01]} key={`comp-${compW.toFixed(3)}x${compH.toFixed(3)}`}>
+      <mesh position={[0, 0, -0.01]} key={`comp-${compW.toFixed(3)}x${compH.toFixed(3)}`}>
         <planeGeometry args={[compW, compH]} />
         <meshBasicMaterial color={background} />
       </mesh>

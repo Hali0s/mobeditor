@@ -45,6 +45,12 @@ export function useScrollSyncedPlayhead(contentEl: RefLike) {
     const updateFromCenter = () => {
       if (editorStore.playback.isPlaying) return; // Ignore while playing
       if ((editorStore as any).isPinchZooming) return; // Do not move time when pinch zooming
+      // When at the leftmost position always map to time 0 (small header means center
+      // would otherwise map to several seconds, making the timeline appear to "start" at a non-zero time)
+      if (scrollContainer.scrollLeft === 0) {
+        editorActions.seekTo(0);
+        return;
+      }
       const centerContentX = scrollContainer.scrollLeft + scrollContainer.clientWidth / 2;
       const x = centerContentX - TRACK_HEADER_PX;
       const time = x / editorStore.timelineZoom;
@@ -61,10 +67,7 @@ export function useScrollSyncedPlayhead(contentEl: RefLike) {
     scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
 
-    // Initialize once on mount only when idle
-    if (!editorStore.playback.isPlaying && !(editorStore as any).isPinchZooming) {
-      updateFromCenter();
-    }
+    // Note: intentionally NOT calling updateFromCenter() on mount — let time stay at 0
 
     return () => {
       scrollContainer.removeEventListener('scroll', handleScroll as EventListener);
