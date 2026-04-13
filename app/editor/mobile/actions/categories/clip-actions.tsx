@@ -32,14 +32,16 @@ export const ClipActions: React.FC<{ clipId: string }> = ({ clipId }) => {
         <DuplicateClipAction clipId={clip.id} />
         <SplitClipAction clipId={clip.id} />
         <RemoveClipAction clipId={clip.id} />
-        <ToggleClipVisibilityAction clipId={clip.id} visible={clip.visible} />
-        <ToggleClipMuteAction clipId={clip.id} muted={clip.muted} />
 
         {asset?.type === 'video' && (
-          <>
-            <DetachAudioAction clipId={clip.id} />
-            <AVSpeedAction clipId={clip.id} />
-          </>
+          <DetachAudioAction clipId={clip.id} />
+        )}
+
+        <ToggleClipMuteAction clipId={clip.id} muted={clip.muted} />
+        <ToggleClipVisibilityAction clipId={clip.id} visible={clip.visible} />
+
+        {asset?.type === 'video' && (
+          <AVSpeedAction clipId={clip.id} />
         )}
 
         <ClipOpacityAction clipId={clip.id} opacity={clip.opacity} />

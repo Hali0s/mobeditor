@@ -99,7 +99,7 @@ export const ExportSettingsDrawer: React.FC<Props> = ({ children }) => {
               <div>
                 <div className="text-sm font-medium mb-2 opacity-80">Формат</div>
                 <div className="flex items-center gap-2">
-                  <select className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10" value={format} onChange={(e)=>setFormat(e.currentTarget.value as any)}>
+                  <select className="w-full px-3 py-2 rounded-xl bg-neutral-900 text-white border border-white/10" value={format} onChange={(e)=>setFormat(e.currentTarget.value as any)}>
                     <option value="mp4">MP4 (H.264)</option>
                     <option value="webm">WebM (VP9)</option>
                     <option value="mov">MOV (H.264)</option>
@@ -145,7 +145,7 @@ export const ExportSettingsDrawer: React.FC<Props> = ({ children }) => {
                 <div className="text-sm font-medium mb-2 opacity-80">Частота кадров</div>
                 <div className="flex items-center gap-2">
                   <input type="number" min={1} max={120} step={1} value={fps} onChange={(e)=>setFps(parseInt(e.currentTarget.value||'0',10)||fps)} className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-white/20" />
-                  <select className="px-3 py-2 rounded-xl bg-white/5 border border-white/10" defaultValue="" onChange={(e)=>{ const v=parseFloat(e.currentTarget.value); if(!Number.isNaN(v)) setFps(v as number); }}>
+                  <select className="px-3 py-2 rounded-xl bg-neutral-900 text-white border border-white/10" defaultValue="" onChange={(e)=>{ const v=parseFloat(e.currentTarget.value); if(!Number.isNaN(v)) setFps(v as number); }}>
                     <option value="" disabled>Пресет</option>
                     {FPS_PRESETS.map(f => (<option key={f} value={String(f)}>{f}</option>))}
                   </select>

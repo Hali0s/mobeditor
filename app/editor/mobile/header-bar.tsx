@@ -1,8 +1,10 @@
 import React from 'react';
-import { Film } from 'lucide-react';
+import { Film, FilePlus } from 'lucide-react';
 import { CompositionSettingsDrawer } from './settings/composition-drawer';
 import { ExportSettingsDrawer } from './settings/export-drawer';
 import ExportToast from './settings/export-toast';
+import { editorActions } from '../shared/store';
+import { clearPersistedProject } from '../shared/persistence';
 
 interface HeaderBarProps {
   onHome?: () => void;
@@ -10,16 +12,32 @@ interface HeaderBarProps {
 }
 
 export const HeaderBar: React.FC<HeaderBarProps> = ({ onHome, onExport }) => {
+  const handleNewProject = () => {
+    if (!window.confirm('Начать новый проект? Все несохранённые изменения будут потеряны.')) return;
+    clearPersistedProject().catch(() => {});
+    editorActions.resetProject();
+  };
+
   return (
     <div className="flex items-center justify-between px-3 py-2 bg-black/95 text-white backdrop-blur supports-[backdrop-filter]:bg-black/70">
-      <CompositionSettingsDrawer>
+      <div className="flex items-center gap-1">
+        <CompositionSettingsDrawer>
+          <button
+            aria-label="Composition Settings"
+            className="p-2 rounded-xl bg-white/5 active:bg-white/10"
+          >
+            <Film size={18} />
+          </button>
+        </CompositionSettingsDrawer>
         <button
-          aria-label="Composition Settings"
-          className="p-2 rounded-xl bg-white/5 active:bg-white/10"
+          aria-label="Новый проект"
+          title="Новый проект"
+          className="p-2 rounded-xl bg-white/5 active:bg-white/10 text-white/60 hover:text-white/90"
+          onClick={handleNewProject}
         >
-          <Film size={18} />
+          <FilePlus size={16} />
         </button>
-      </CompositionSettingsDrawer>
+      </div>
       <div className="text-sm font-medium opacity-80">FZ-Editor</div>
       <div className="relative">
         <ExportSettingsDrawer>

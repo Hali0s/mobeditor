@@ -1,6 +1,7 @@
 import { editorActions } from './store';
 import { ref } from 'valtio';
 import type { Asset, VideoMetadata } from './types';
+import { saveFileToIDB } from './persistence';
 
 /**
  * Extract video metadata from a video element
@@ -71,6 +72,11 @@ export const loadVideoAsset = async (
       video: null,
       loadState: 'loading',
     } as any);
+
+    // Persist original file to IndexedDB for project restore
+    if (typeof src !== 'string') {
+      saveFileToIDB(assetId, src).catch(() => {});
+    }
 
     const handleLoadedMetadata = async () => {
       try {
@@ -220,6 +226,10 @@ export const loadImageAsset = async (
       image: null,
       loadState: 'loading',
     } as any);
+
+    if (typeof src !== 'string') {
+      saveFileToIDB(assetId, src).catch(() => {});
+    }
 
     const handleLoad = () => {
       try {
@@ -423,6 +433,10 @@ export const loadAudioAsset = async (
       audio: null,
       loadState: 'loading',
     } as any);
+
+    if (typeof src !== 'string') {
+      saveFileToIDB(assetId, src).catch(() => {});
+    }
 
     const handleLoadedMetadata = () => {
       try {
