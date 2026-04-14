@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { editorActions } from '../shared/store';
+import editorStore, { editorActions } from '../shared/store';
 
 interface TimelinePlayheadProps {
   currentTime: number;
@@ -16,19 +16,22 @@ export const TimelinePlayhead: React.FC<TimelinePlayheadProps> = ({
 }) => {
   const x = currentTime * pixelsPerSecond;
   const dragging = useRef(false);
+  const wasPlaying = useRef(false);
 
   const getTimeFromClientX = (clientX: number) => {
     const container = scrollContainerRef?.current ?? document.querySelector<HTMLElement>('[data-timeline-scroll]');
     if (!container) return null;
     const rect = container.getBoundingClientRect();
     const scrollLeft = container.scrollLeft;
-    const contentX = clientX - rect.left + scrollLeft - 40; // subtract header
+    const contentX = clientX - rect.left + scrollLeft - 40;
     return Math.max(0, contentX / pixelsPerSecond);
   };
 
   const onPointerDown = (e: React.PointerEvent) => {
     e.stopPropagation();
     dragging.current = true;
+    wasPlaying.current = editorStore.playback.isPlaying;
+    if (wasPlaying.current) editorActions.setPlaying(false);
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
 
@@ -43,6 +46,8 @@ export const TimelinePlayhead: React.FC<TimelinePlayheadProps> = ({
     dragging.current = false;
     const t = getTimeFromClientX(e.clientX);
     if (t !== null) editorActions.seekTo(t);
+    if (wasPlaying.current) editorActions.setPlaying(true);
+    wasPlaying.current = false;
   };
 
   return (

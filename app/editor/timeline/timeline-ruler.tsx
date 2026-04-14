@@ -1,5 +1,5 @@
 import React from 'react';
-import { editorActions } from '../shared/store';
+import editorStore, { editorActions } from '../shared/store';
 
 interface TimelineRulerProps {
   duration: number;
@@ -16,7 +16,10 @@ export const TimelineRuler: React.FC<TimelineRulerProps> = ({
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const t = Math.max(0, x / pixelsPerSecond);
+    const wasPlaying = editorStore.playback.isPlaying;
+    if (wasPlaying) editorActions.setPlaying(false);
     editorActions.seekTo(t);
+    if (wasPlaying) editorActions.setPlaying(true);
   };
   const majorTicks = [];
   const minorTicks = [];
