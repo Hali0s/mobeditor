@@ -14,6 +14,7 @@ export const TracksArea: React.FC = () => {
           className="h-full min-h-0 overflow-x-auto overflow-y-auto overscroll-contain no-scrollbar"
           style={{ touchAction: 'pan-x pan-y', WebkitOverflowScrolling: 'touch' }}
           ref={scrollRef}
+          data-timeline-scroll="1"
         >
           <Timeline scrollContainer={containerEl} />
         </div>

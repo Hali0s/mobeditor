@@ -1,4 +1,5 @@
 import React from 'react';
+import { editorActions } from '../shared/store';
 
 interface TimelineRulerProps {
   duration: number;
@@ -11,6 +12,12 @@ export const TimelineRuler: React.FC<TimelineRulerProps> = ({
   pixelsPerSecond,
   timelineWidth,
 }) => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const t = Math.max(0, x / pixelsPerSecond);
+    editorActions.seekTo(t);
+  };
   const majorTicks = [];
   const minorTicks = [];
   
@@ -49,15 +56,11 @@ export const TimelineRuler: React.FC<TimelineRulerProps> = ({
       {/* Track header spacer */}
       <div className="absolute left-0 top-0 w-10 h-full " />
       
-      {/* Ruler area */}
-      <div 
-        className="absolute bg-transparent"
-        style={{ 
-          left: '40px',
-          top: 0,
-          width: `${timelineWidth}px`,
-          height: '100%'
-        }}
+      {/* Ruler area — click to seek */}
+      <div
+        className="absolute bg-transparent cursor-pointer"
+        style={{ left: '40px', top: 0, width: `${timelineWidth}px`, height: '100%' }}
+        onClick={handleClick}
       >
         {/* Minor ticks */}
         {minorTicks.map(({ time, x }) => (
