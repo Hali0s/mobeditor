@@ -32,18 +32,20 @@ export const TimelinePlayhead: React.FC<TimelinePlayheadProps> = ({
     dragging.current = true;
     wasPlaying.current = editorStore.playback.isPlaying;
     if (wasPlaying.current) editorActions.setPlaying(false);
+    (editorStore as any).isScrubbingPlayhead = true;
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragging.current) return;
     const t = getTimeFromClientX(e.clientX);
-    if (t !== null) editorActions.seekTo(t);
+    if (t !== null) editorActions.setCurrentTime(t); // setCurrentTime, not seekTo — avoid scroll feedback
   };
 
   const onPointerUp = (e: React.PointerEvent) => {
     if (!dragging.current) return;
     dragging.current = false;
+    (editorStore as any).isScrubbingPlayhead = false;
     const t = getTimeFromClientX(e.clientX);
     if (t !== null) editorActions.seekTo(t);
     if (wasPlaying.current) editorActions.setPlaying(true);
