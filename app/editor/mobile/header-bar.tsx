@@ -39,11 +39,19 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({ onHome, onExport }) => {
         </button>
       </div>
       <div className="text-sm font-medium opacity-80">FZ-Editor</div>
-      <div className="relative">
+      <div className="relative flex items-center gap-1.5">
+        <a
+          href="https://fotozhivi.ru"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-2.5 py-1 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 text-xs font-medium text-white/70 hover:text-white/90"
+        >
+          Главная
+        </a>
         <ExportSettingsDrawer>
           <button
             aria-label="Экспорт"
-            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 active:bg-white/20 text-sm font-medium"
+            className="px-2.5 py-1 rounded-xl bg-white/10 hover:bg-white/15 active:bg-white/20 text-xs font-medium"
             onClick={onExport}
           >
             Экспорт
