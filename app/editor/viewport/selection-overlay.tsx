@@ -57,7 +57,9 @@ export const SelectionOverlay: React.FC<SelectionOverlayProps> = ({
     };
   }
 
-  const startResize = (e: any) => {
+  // signX: +1 if dragging right increases width (right handles), -1 for left handles
+  // signY: +1 if dragging down increases height (bottom handles), -1 for top handles
+  const makeResizeHandler = (signX: number, signY: number) => (e: any) => {
     e.stopPropagation();
     if (e.nativeEvent?.preventDefault) e.nativeEvent.preventDefault();
     try { (e.target as Element)?.setPointerCapture?.(e.nativeEvent.pointerId); } catch {}
@@ -84,27 +86,23 @@ export const SelectionOverlay: React.FC<SelectionOverlayProps> = ({
       const dx = (ev.clientX - startPointer.current.x) * perPxX;
       const dy = (ev.clientY - startPointer.current.y) * perPxY;
 
-      // Top-left pivot: moving bottom-right handle: scale x by dx, y by dy; adjust position to keep TL fixed
       const base = sessionBase.current;
-      // Convert dx/dy (world units) into new scale relative to start size
-  const startW = sessionBase.current.startW;
-  const startH = sessionBase.current.startH;
-      const w1 = startW + dx; // treat dragging right as increasing width
-      const h1 = startH + dy; // dragging down increases height
-  const targetSx = base.scale.x * Math.max(0.01, w1 / Math.max(0.0001, startW));
-  const targetSy = base.scale.y * Math.max(0.01, h1 / Math.max(0.0001, startH));
-  const k = 0.25; // smoothing factor
-  const sx = Math.max(0.08, base.scale.x + (targetSx - base.scale.x) * k);
-  const sy = Math.max(0.08, base.scale.y + (targetSy - base.scale.y) * k);
+      const startW = base.startW;
+      const startH = base.startH;
+
+      // Each corner scales its own axis direction
+      const W1 = Math.max(0.05, startW + signX * dx);
+      const H1 = Math.max(0.05, startH + signY * dy);
+
+      const sx = Math.max(0.05, base.scale.x * W1 / startW);
+      const sy = Math.max(0.05, base.scale.y * H1 / startH);
       const newScale = new THREE.Vector3(sx, sy, base.scale.z);
-      const w0 = startW;
-      const h0 = startH;
-      const dw = w1 - w0;
-      const dh = h1 - h0;
-      // Shift position by half delta to keep top-left as pivot (local space, y increases up)
+
+      // Position: center always shifts by half of the raw pointer delta
+      // so the opposite (fixed) corner stays put — this is identical for all corners
       const newPos = new THREE.Vector3(
-        base.position.x + dw / 2,
-        base.position.y - dh / 2,
+        base.position.x + dx / 2,
+        base.position.y - dy / 2,
         base.position.z
       );
 
@@ -442,35 +440,24 @@ export const SelectionOverlay: React.FC<SelectionOverlayProps> = ({
         <meshBasicMaterial transparent opacity={0} />
       </mesh>
       
-      {/* Corner resize handles */}
-      <mesh
-        position={[halfWidth, halfHeight, 0.002]}
-        onPointerDown={startResize}
-      >
+      {/* Corner resize handles — signX/signY define how drag direction maps to size change */}
+      {/* Top-right: right→wider, down→shorter */}
+      <mesh position={[halfWidth, halfHeight, 0.002]} onPointerDown={makeResizeHandler(+1, -1)}>
         <circleGeometry args={[handleSize, 16]} />
         <meshBasicMaterial color="#ffffff" />
       </mesh>
-      
-      <mesh
-        position={[-halfWidth, halfHeight, 0.002]}
-        onPointerDown={startResize}
-      >
+      {/* Top-left: left→wider, down→shorter */}
+      <mesh position={[-halfWidth, halfHeight, 0.002]} onPointerDown={makeResizeHandler(-1, -1)}>
         <circleGeometry args={[handleSize, 16]} />
         <meshBasicMaterial color="#ffffff" />
       </mesh>
-      
-      <mesh
-        position={[halfWidth, -halfHeight, 0.002]}
-        onPointerDown={startResize}
-      >
+      {/* Bottom-right: right→wider, down→taller */}
+      <mesh position={[halfWidth, -halfHeight, 0.002]} onPointerDown={makeResizeHandler(+1, +1)}>
         <circleGeometry args={[handleSize, 16]} />
         <meshBasicMaterial color="#ffffff" />
       </mesh>
-      
-      <mesh
-        position={[-halfWidth, -halfHeight, 0.002]}
-        onPointerDown={startResize}
-      >
+      {/* Bottom-left: left→wider, down→taller */}
+      <mesh position={[-halfWidth, -halfHeight, 0.002]} onPointerDown={makeResizeHandler(-1, +1)}>
         <circleGeometry args={[handleSize, 16]} />
         <meshBasicMaterial color="#ffffff" />
       </mesh>
